@@ -3,5 +3,3 @@ ubuntu-desktop
 gdm3
 zenity
 firefox
-libreoffice-writer
-libreoffice-calc
