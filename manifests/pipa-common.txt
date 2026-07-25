@@ -28,5 +28,6 @@ libcamera-tools
 gstreamer1.0-libcamera
 plymouth
 plymouth-theme-spinner
+systemd-timesyncd
 # Optional (installed if present in apt):
 # qrtr-tools rmtfs tqftpserv pd-mapper tuned
