@@ -37,6 +37,9 @@ systemctl enable swclock-offset-boot.service swclock-offset-shutdown.service || 
 # Qualcomm firmware services
 systemctl enable pd-mapper rmtfs tqftpserv || true
 
+# systemd-timesyncd
+systemctl enable systemd-timesyncd || true
+
 # Sensor / audio stack
 systemctl enable \
     pipa-sensors-persist \
