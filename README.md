@@ -30,7 +30,7 @@ ubuntu-pipa/
 ## Package repo
 
 ```
-https://thespider2.github.io/pipa-pkgs/repo/ubuntu/
+[Ubuntu Repo](https://mengguizzz.github.io/pipa-pkgs/ubuntu/)
 ```
 
 ```bash
