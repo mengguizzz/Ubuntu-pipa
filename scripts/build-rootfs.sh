@@ -8,7 +8,7 @@ VARIANT="${1:?usage: $0 <gnome|plasma> [output.img]}"
 OUT_IMG="${2:-$REPO_ROOT/work/ubuntu-pipa-${VARIANT}.img}"
 SUITE="${UBUNTU_SUITE:-resolute}"
 MIRROR="${UBUNTU_MIRROR:-http://ports.ubuntu.com/ubuntu-ports}"
-PIPA_PKGS_URL="${PIPA_PKGS_URL:-https://thespider2.github.io/pipa-pkgs/repo/ubuntu/}"
+PIPA_PKGS_URL="${PIPA_PKGS_URL:-https://mengguizzz.github.io/pipa-pkgs/ubuntu/}"
 IMAGE_SIZE_GIB="${IMAGE_SIZE_GIB:-16}"
 
 if [ "$(id -u)" -ne 0 ]; then
