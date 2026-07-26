@@ -35,7 +35,7 @@ jobs:
             -v /dev:/dev \
             -e BUILD_VARIANTS="${{ matrix.variant }}" \
             -e BUILD_GIT_REV="${{ github.sha }}" \
-            -e PIPA_PKGS_URL="https://thespider2.github.io/pipa-pkgs/repo/ubuntu/" \
+            -e PIPA_PKGS_URL="https://mengguizzz.github.io/pipa-pkgs/ubuntu/" \
             ubuntu-pipa-builder
 
       - name: Upload ${{ matrix.variant }} archive
