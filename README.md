@@ -29,9 +29,9 @@ ubuntu-pipa/
 
 ## Package repo
 
-```
+
 [Ubuntu Repo](https://mengguizzz.github.io/pipa-pkgs/ubuntu/)
-```
+
 
 ```bash
 # On a running tablet
