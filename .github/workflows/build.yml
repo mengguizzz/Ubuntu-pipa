@@ -51,3 +51,43 @@ jobs:
   # Tag the build and attach images via a GitHub Release. Archives often
   # exceed the 2GiB per-asset limit, so oversized files are split into
   # <=1900MiB parts (reassemble with cat — see release notes).
+  release:
+    name: Publish GitHub Release
+    needs: image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-assets
+          merge-multiple: true
+
+      - name: Split oversized archives
+        run: |
+          cd release-assets
+          for file in *.tar.xz; do
+            if [ -f "$file" ]; then
+              echo "正在切割 $file 以绕过 GitHub 2GB 单文件限制..."
+              split -b 1900M -d "$file" "${file}.part"
+              rm "$file"
+            fi
+          done
+
+      - name: Create Release and Upload Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_type == 'tag' && github.ref_name || format('build-{0}', github.run_number) }}
+          name: ${{ github.ref_type == 'tag' && github.ref_name || format('Nightly Build {0}', github.run_number) }}
+          files: release-assets/*
+          prerelease: ${{ github.ref_type != 'tag' }} # 不是手动打 tag 的都标记为预发布版
+          body: |
+            已修复 Snap (LZO/ZSTD) 挂载问题；
+            ⚠️ **解压说明：镜像文件体积过大，已被切割。**
+            请下载所有的 `.part*` 文件，放进同一个文件夹，然后执行以下命令合并：
+            ```bash
+            cat ubuntu-pipa-gnome-*.tar.xz.part* > ubuntu-pipa-gnome.tar.xz
+            ```
+            合并后，建议使用附带的 sha256 校验文件验证完整性：
+            ```bash
+            sha256sum -c ubuntu-pipa-gnome-*.tar.xz.sha256
+            ```
