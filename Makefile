@@ -10,8 +10,8 @@ BUILDER_IMAGE := ubuntu-pipa-builder
 OUTPUT_DIR := output
 
 BUILD_GIT_REV ?= $(shell git rev-parse --short HEAD 2>/dev/null || echo unknown)
-BUILD_VARIANTS ?= gnome plasma
-PIPA_PKGS_URL ?= https://thespider2.github.io/pipa-pkgs/repo/ubuntu/
+BUILD_VARIANTS ?= gnome
+PIPA_PKGS_URL ?= https://mengguizzz.github.io/pipa-pkgs/ubuntu/
 
 DOCKER_RUN := docker run --rm --privileged \
 	-v "$(CURDIR)/$(OUTPUT_DIR):/build/output" \
