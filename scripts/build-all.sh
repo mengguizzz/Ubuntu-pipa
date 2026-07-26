@@ -11,7 +11,7 @@ fi
 
 VARIANTS="${1:-gnome plasma}"
 export BUILD_VARIANTS="$VARIANTS"
-export PIPA_PKGS_URL="${PIPA_PKGS_URL:-https://thespider2.github.io/pipa-pkgs/repo/ubuntu/}"
+export PIPA_PKGS_URL="${PIPA_PKGS_URL:-https://mengguizzz.github.io/pipa-pkgs/ubuntu/}"
 export BUILD_GIT_REV="${BUILD_GIT_REV:-$(git rev-parse --short HEAD 2>/dev/null || echo unknown)}"
 
 "$REPO_ROOT/scripts/ci-build.sh"
