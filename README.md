@@ -72,7 +72,7 @@ sudo ./scripts/build-all.sh gnome
 ## Flashing
 
 Download the variant you want from the matching
-[GitHub Release](https://github.com/PAD6-DEV/Ubuntu-pipa/releases)
+[GitHub Release](https://github.com/mengguizzz/Ubuntu-pipa/releases/tag/build-12)
 (successful `main` / manual builds publish a `build-YYYYMMDD-<sha>` tag +
 release). Archives larger than ~1.9 GiB are split into `.part` pieces to stay
 under GitHub’s 2 GiB asset limit — reassemble with `./join-archives.sh` (or
