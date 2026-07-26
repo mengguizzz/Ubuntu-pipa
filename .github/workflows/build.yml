@@ -48,9 +48,6 @@ jobs:
           retention-days: 14
           if-no-files-found: error
 
-  # Tag the build and attach images via a GitHub Release. Archives often
-  # exceed the 2GiB per-asset limit, so oversized files are split into
-  # <=1900MiB parts (reassemble with cat — see release notes).
   release:
     name: Publish GitHub Release
     needs: image
@@ -59,33 +56,43 @@ jobs:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
-          path: release-assets
+          path: release-assets/
           merge-multiple: true
 
-      - name: Split oversized archives
+      - name: Split oversized archives and stage release assets
+        id: stage
         run: |
-          cd release-assets
-          for file in *.tar.xz; do
-            if [ -f "$file" ]; then
-              echo "正在切割 $file 以绕过 GitHub 2GB 单文件限制..."
-              split -b 1900M -d "$file" "${file}.part"
-              rm "$file"
+          set -euo pipefail
+          mkdir -p staged
+          find release-assets -type f \( -name '*.tar.xz' -o -name '*.sha256' \) \
+            -exec cp -a {} staged/ \;
+          cd staged
+          MAX_BYTES=$((1900 * 1024 * 1024))
+          shopt -s nullglob
+          for archive in *.tar.xz; do
+            size=$(stat -c%s "$archive")
+            echo "$archive: $size bytes"
+            if [ "$size" -gt "$MAX_BYTES" ]; then
+              echo "Splitting $archive into <=1900MiB parts"
+              split -b "$MAX_BYTES" -d -a 2 --additional-suffix=.part \
+                "$archive" "${archive}."
+              rm -f "$archive"
             fi
           done
-
+      
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_type == 'tag' && github.ref_name || format('build-{0}', github.run_number) }}
           name: ${{ github.ref_type == 'tag' && github.ref_name || format('Nightly Build {0}', github.run_number) }}
           files: release-assets/*
-          prerelease: ${{ github.ref_type != 'tag' }} # 不是手动打 tag 的都标记为预发布版
+          prerelease: ${{ github.ref_type != 'tag' }} 
           body: |
             已修复 Snap (LZO/ZSTD) 挂载问题；
-            ⚠️ **解压说明：镜像文件体积过大，已被切割。**
+            ⚠️ **解压说明：体积过大的文件（>=2GB），已被切割，小文件不需要。**
             请下载所有的 `.part*` 文件，放进同一个文件夹，然后执行以下命令合并：
             ```bash
-            cat ubuntu-pipa-gnome-*.tar.xz.part* > ubuntu-pipa-gnome.tar.xz
+            cat ubuntu-pipa-xxxx-*.tar.xz.part* > ubuntu-pipa-gnome.tar.xz
             ```
             合并后，建议使用附带的 sha256 校验文件验证完整性：
             ```bash
