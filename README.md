@@ -1,3 +1,11 @@
+# 写在最前
+
+感谢仓库原作者以及其他开发者的贡献，本仓库用于修复一些小问题以及测试；<br>
+原仓库：[Ubuntu-pipa](https://github.com/PAD6-DEV/Ubuntu-pipa);<br>
+pipa-pkgs仓库：[pipa-pkgs](https://github.com/thespider2/pipa-pkgs)
+
+
+
 # Ubuntu for Xiaomi Pad 6 (pipa)
 
 Ubuntu 26.04 LTS (Resolute) port for the Xiaomi Pad 6, built with mmdebstrap.
