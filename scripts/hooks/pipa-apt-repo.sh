@@ -5,7 +5,7 @@ mkdir -p /etc/apt/sources.list.d /etc/apt/preferences.d
 
 cat > /etc/apt/sources.list.d/pipa-pkgs.list <<'EOF'
 # Xiaomi Pad 6 (pipa) Ubuntu device packages
-deb [trusted=yes] https://thespider2.github.io/pipa-pkgs/repo/ubuntu/ ./
+deb [trusted=yes] https://mengguizzz.github.io/pipa-pkgs/ubuntu/ ./
 EOF
 
 # Prefer packages published by pipa-pkgs over Ubuntu archives on name clash.
